@@ -1,0 +1,125 @@
+<h3>round {{roundCount}}</h3>
+
+<div *ngIf="phase === 0">
+   
+  <h3>Movement</h3>
+  
+  <table class="table">
+    <tr *ngFor="let bike of bikes; let j = index">
+      <td>
+        
+        <div >
+          <h4>{{bike.teamType}} {{bike.colour}} {{bike.name}}</h4>
+
+          <div *ngIf="bike.teamType === 'human'">
+            <h3><span>Selected: {{bike.selectedCard}}</span></h3>
+
+            <div *ngIf="bike.cardsState === 0">
+              <button class="btn" (click)="startSelect(j)">Select card</button>
+            </div>
+            <div *ngIf="bike.cardsState === 1">
+              <ul style="padding: 0;">
+                <li style="display: inline;" *ngFor="let c of bike.deck.four; let i = index">
+                  <button style="width: 4em; height: 4em;" class="btn btn-lg btn-default" (click)="selectCard(j, i)"> {{c}}</button>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="bike.cardsState === 2">
+              Card selected
+            </div>
+            <div *ngIf="bike.cardsState === 3">
+              Other bike cards being selected
+            </div>
+          </div>
+
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn" (click)="endMovement()">End movement</button>
+</div>
+
+<div *ngIf="phase === 20">
+  <h3>Summary</h3>
+  
+  <table class="table">
+    <tr *ngFor="let bike of bikes; let j = index">
+      <td><h4>{{bike.teamType}} {{bike.colour}} {{bike.name}}</h4></td><td><h4>{{bike.selectedCard}}</h4></td>
+    </tr>
+  </table>
+  
+  <button class="btn" (click)="phase = 1">Exhaustion</button>
+  <button class="btn" (click)="phase = 0">Back</button>
+</div>
+
+<div *ngIf="phase === 1">
+  
+  <h3>Exhaustion</h3>
+
+  <div *ngFor="let bike of bikes; let j = index">
+    <div *ngIf="bike.teamType === 'human'">
+      <h4>{{bike.colour}} {{bike.name}}</h4>
+      <button [disabled]="bike.exhaustionAdded" class="btn" (click)="addExhaustion(j)">Add exhaustion</button><span *ngIf="bike.exhaustionAdded"> Added</span>  <br/>
+    </div>
+  </div>
+
+  <br />
+  <button class="btn" (click)="endRound()">End round</button>
+  <button class="btn" (click)="phase = 20">Back</button>
+</div>
+
+<div *ngIf="phase === 10">
+  
+  <h3>Setup</h3>
+
+  <select [(ngModel)]="chosenTeamType" class="form-control">
+    <option *ngFor="let teamType of teamTypes" [value]="teamType">{{teamType}}</option>
+  </select>
+  
+  <br/>
+  <select [(ngModel)]="chosenTeamColour" class="form-control">
+    <option *ngFor="let teamColour of teamColours" [value]="teamColour">{{teamColour}}</option>
+  </select>
+  
+  <br/>
+
+  <button class="btn" (click)="addTeam()">Add team</button>
+  <button class="btn" (click)="phase = 0">Start</button>
+  <br/>
+
+  <br/>
+  <h4>Added Bikes</h4>
+
+  <table class="table">
+    <tr *ngFor="let bike of bikes; let j = index">
+      <td><h4>{{bike.teamType}} {{bike.colour}} {{bike.name}}</h4></td>
+    </tr>
+  </table>
+
+  <!--<ul>
+    <li *ngFor="let bike of bikes; let j = index"><h4>{{bike.teamType}} {{bike.colour}} {{bike.name}}</h4></li>
+  </ul>-->
+
+</div>
+
+
+<h3>Debug</h3>
+
+<div>
+  <table>
+    <tr *ngFor="let bike of bikes; let j = index">      
+      <td>
+        <h4>{{bike.teamType}} {{bike.colour}} {{bike.name}}</h4>
+        Cards: <span *ngFor="let foo of bike.deck.cards">{{foo}} </span>
+        <br />
+        Recycle: <span *ngFor="let foo of bike.deck.recycle">{{foo}} </span>
+        <br />
+        Removed: <span *ngFor="let foo of bike.deck.removed">{{foo}} </span>
+        <br />
+        Four: <span *ngFor="let foo of bike.deck.four">{{foo}} </span>
+        <br />
+      </td>
+    </tr>
+  </table>  
+</div>
