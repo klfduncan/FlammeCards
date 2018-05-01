@@ -82,6 +82,23 @@ export class FlammeCardManager {
             this.cards.push(9);
             this.cards.push(9);
         }
+        else if (deckType === 4) {  // muscle rouleur
+            this.cards.push(3);
+            this.cards.push(3);
+            this.cards.push(3);
+            this.cards.push(4);
+            this.cards.push(4);
+            this.cards.push(4);
+            this.cards.push(5);
+            this.cards.push(5);
+            this.cards.push(5);
+            this.cards.push(6);
+            this.cards.push(6);
+            this.cards.push(6);
+            this.cards.push(7);
+            this.cards.push(7);
+            this.cards.push(7);
+        }
              
         this.shuffle(this.cards);
     }
