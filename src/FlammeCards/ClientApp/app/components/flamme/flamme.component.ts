@@ -117,6 +117,8 @@ export class FlammeComponent {
 
             this.bikes.push(bike2);
         }
+        
+         this.teamColours.removed.push(this.chosenTeamColour);
     }
 
     addExhaustion(bikeIndex: number) {
